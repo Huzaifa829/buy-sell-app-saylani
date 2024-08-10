@@ -3,14 +3,55 @@ import { auth, db } from "./config.js";
 import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const nav_option_show = document.querySelector('#nav_option_show')
-let logout_btn ;
+const main_card_container = document.querySelector('#main_card_container')
+alertify.set('notifier', 'position', 'top-center');
 
+let logout_btn ;
+let arr = []
+async function getDataFrom_db(){
+  const querySnapshot = await getDocs(collection(db, "addPost"));
+  querySnapshot.forEach((doc) => {
+      console.log(doc.data());
+      arr.push(doc.data())
+      
+  });
+  render()
+}
+getDataFrom_db()
+
+async function render(){
+  arr.map((item,index)=>{
+
+    // console.log(item.text);
+    main_card_container.innerHTML +=`
+   <div class="card bg-base-100 shadow-xl">
+      <figure>
+        <img
+          class="object-cover w-full h-48"
+          src="${item.productImgUrl}"
+          alt="${item.productTitle}" />
+      </figure>
+      <div class="card-body h-100 flex flex-col justify-between">
+        <div>
+          <h2 class="card-title">${item.productTitle}</h2>
+          <p class="text-sm overflow-hidden text-ellipsis">
+         ${item.productDescription}
+          </p>
+        </div>
+        <div class="card-actions flex justify-between items-center">
+          <span class="text-lg font-semibold text-gray-700">RS ${item.productPrice}</span>
+          <button class="btn btn-primary">Buy Now</button>
+        </div>
+      </div>
+    </div>
+    `
+})
+}
 function check_ononAuthStateChanged(){
 
     onAuthStateChanged(auth,async  (user) => {
         if (user) {
           const uid = user.uid;
-          console.log(uid);
           try {
               const q = query(collection(db, "users"), where("uid", "==", uid));
         

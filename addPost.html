@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
 
   <title>Post Add</title>
 </head>
@@ -35,12 +36,12 @@
             <span class="label-text">Upload Product Photo</span>
           </label>
           <label for="upload-photo" class="flex bg-primary justify-center items-center border-2 border-dashed border-white rounded-lg h-48 cursor-pointer">
-            <!-- SVG Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="192" viewBox="0 0 200 192" fill="none">
+            <svg id="svg-icon" xmlns="http://www.w3.org/2000/svg" width="200" height="192" viewBox="0 0 200 192" fill="none">
               <path d="M8 56C8 38.3269 22.3269 24 40 24H120C137.673 24 152 38.3269 152 56V136C152 153.673 137.673 168 120 168H40C22.3269 168 8 153.673 8 136V56Z" stroke="white" stroke-width="16"/>
               <path d="M48 96H80M80 96H112M80 96V64M80 96L80 128" stroke="white" stroke-width="16" stroke-linecap="round"/>
             </svg>
-            <input id="upload-photo" type="file" class="hidden" />
+            <img id="uploaded-image" class="hidden h-full w-auto" />
+            <input id="upload-photo" type="file" class="hidden" accept="image/*" />
           </label>
         </div>
 
@@ -101,6 +102,7 @@
 </body>
 
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
 <script type="module" src="./script/addPost.js"></script>
 
 </html>

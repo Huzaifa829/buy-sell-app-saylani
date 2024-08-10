@@ -12,10 +12,26 @@ const userNumber = document.querySelector('#user-number')
 const Post_Now_btn =document.querySelector('#Post_Now_btn')
 const upload_photo =document.querySelector('#upload-photo')
 
+// alert position setting 
+alertify.set('notifier', 'position', 'top-center');
+
 // register btn loader
 const Post_Now_btnBtn = document.querySelector('#Post_Now_btn');
 const Post_Now_text = document.querySelector('#Post_Now_text');
 const loadingSpinner = document.querySelector('#loading-spinner');
+
+const titlePattern = /^.{3,}$/; // At least 3 characters
+const descriptionPattern = /^.{5,}$/; // At least 5 characters
+const pricePattern = /^\d+(\.\d{1,2})?$/; // Only numbers (optionally with two decimal places)
+const namePattern = /^.{4,}$/; // At least 4 characters
+const numberPattern = /^\d{11}$/; // Exactly 11 digits
+
+
+const uploadPhoto = document.getElementById('upload-photo');
+const svgIcon = document.getElementById('svg-icon');
+const uploadedImage = document.getElementById('uploaded-image');
+
+;
 let logout_btn ;
 let uid ;
 function check_ononAuthStateChanged(){
@@ -84,27 +100,70 @@ function check_ononAuthStateChanged(){
 check_ononAuthStateChanged()
 
 Post_Now_btn.addEventListener('click', async()=> {
+  productTitle.style.borderColor = '';
+  productDescription.style.borderColor = '';
+  productPrice.style.borderColor = '';
+  userName.style.borderColor = '';
+  userNumber.style.borderColor = '';
+
   Post_Now_text.classList.add('hidden');
   loadingSpinner.classList.remove('hidden');
   Post_Now_btnBtn.disabled = true;
-    console.log('Product Title:', productTitle);
-    console.log('Product Description:', productDescription);
-    console.log('Product Price:', productPrice);
-    console.log('Your Name:', userName);
-    console.log('Your Number:', userNumber);
-    console.log('upload_photo:', upload_photo);
+
+
+  if (!titlePattern.test(productTitle.value)) {
+    // alert('Product title must be at least 3 characters long.');
+    alertify.error('Product title must be at least 3 characters long.');
+    productTitle.style.borderColor = 'red';
+    resetButton();
+    return;
+  }
+
+  if (!descriptionPattern.test(productDescription.value)) {
+    // alert('Product description must be at least 5 characters long.');
+    alertify.error('Product description must be at least 5 characters long.');
+
+    productDescription.style.borderColor = 'red';
+    resetButton();
+    return;
+  }
+
+  if (!pricePattern.test(productPrice.value)) {
+    // alert('Product price must be a valid number.');
+    alertify.error('Product price must be a valid number.');
+
+    productPrice.style.borderColor = 'red';
+    resetButton();
+    return;
+  }
+
+  if (!namePattern.test(userName.value)) {
+    alertify.error('User name must be at least 4 characters long.');
+    userName.style.borderColor = 'red';
+    resetButton();
+    return;
+  }
+
+  if (!numberPattern.test(userNumber.value)) {
+    alertify.error('User number must be exactly 11 digits.');
+
+    userNumber.style.borderColor = 'red';
+    resetButton();
+    return;
+  }
   let urlCreated = null;
 
   if (upload_photo.files.length > 0) {
     const file = upload_photo.files[0];
     try {
         urlCreated = await UploadFileLink(file);
-        console.log('File uploaded successfully:', urlCreated);
     } catch (error) {
-        console.error('File upload failed:', error);
+    alertify.error(error);
+
     }
 } else {
-    console.log('No file selected');
+    alertify.error('No file selected');
+
     resetButton()
     return;
 }
@@ -120,16 +179,25 @@ Post_Now_btn.addEventListener('click', async()=> {
         productImgUrl: urlCreated,
         uid: uid
     });
-      
+    alertify.success('Post added successfully');
+
+    // Clear input fields after successful submission
+    productTitle.value = '';
+    productDescription.value = '';
+    productPrice.value = '';
+    userName.value = '';
+    userNumber.value = '';
+    upload_photo.value = '';
+
+    uploadedImage.classList.add('hidden');
+    svgIcon.classList.remove('hidden');
     
-    Post_Now_btn.reset();
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
     resetButton()
   } finally{
-    console.log('uploded');
-    
+  
     resetButton()
 
   }
@@ -152,3 +220,19 @@ function resetButton() {
   loadingSpinner.classList.add('hidden');
   Post_Now_btnBtn.disabled = false;
 }
+
+
+uploadPhoto.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      svgIcon.classList.add('hidden');
+      uploadedImage.src = e.target.result;
+      uploadedImage.classList.remove('hidden');
+    };
+
+    reader.readAsDataURL(file);
+  }
+})

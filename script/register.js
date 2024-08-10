@@ -10,6 +10,8 @@ const Email_dt = document.querySelector('#Email_dt')
 const password_dt = document.querySelector('#password_dt')
 const profile_pic = document.querySelector('#profile_pic')
 
+alertify.set('notifier', 'position', 'top-center');
+
 
 // register btn loader
 const registerBtn = document.querySelector('#register-btn');
@@ -33,21 +35,29 @@ from_dt.addEventListener('submit', async (e) => {
 
     if (!nameRegex.test(Frist_Name.value)) {
         console.error('First name must be at least 3 characters long');
+        alertify.error('First name must be at least 3 characters long');
+
         resetButton()
         return;
     }
     if (!nameRegex.test(Last_Name.value)) {
         console.error('Last name must be at least 3 characters long');
+        alertify.error('Last name must be at least 3 characters long');
+
         resetButton()
         return;
     }
     if (!emailRegex.test(Email_dt.value)) {
         console.error('Invalid email format');
+        alertify.error('Invalid email format');
+
         resetButton()
         return;
     }
     if (!passwordRegex.test(password_dt.value)) {
         console.error('Password must be at least 6 characters long');
+        alertify.error('Password must be at least 6 characters long');
+
         resetButton()
         return;
     }
@@ -62,6 +72,8 @@ from_dt.addEventListener('submit', async (e) => {
         }
     } else {
         console.log('No file selected');
+        alertify.error('No file selected');
+
         resetButton()
         return;
     }
@@ -78,6 +90,8 @@ from_dt.addEventListener('submit', async (e) => {
             uid: user.uid
         });
         console.log("Document written with ID: ", docRef.id);
+        alertify.success('Successfully register');
+
        
         from_dt.reset();
       } catch (error) {

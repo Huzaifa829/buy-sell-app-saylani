@@ -8,6 +8,9 @@ const Email_dt = document.querySelector('#Email_dt')
 const password_dt = document.querySelector('#password_dt')
 
 
+alertify.set('notifier', 'position', 'top-center');
+
+
 
 // register btn loader
 const registerBtn = document.querySelector('#register-btn');
@@ -27,11 +30,15 @@ from_dt.addEventListener('submit', async (e) => {
 
     if (!emailRegex.test(Email_dt.value)) {
         console.error('Invalid email format');
+        alertify.error('Invalid email format');
+
         resetButton()
         return;
     }
     if (!passwordRegex.test(password_dt.value)) {
         console.error('Password must be at least 6 characters long');
+        alertify.error('Password must be at least 6 characters long');
+
         resetButton()
         return;
     }
@@ -40,7 +47,15 @@ from_dt.addEventListener('submit', async (e) => {
         const userCredential = await signInWithEmailAndPassword(auth, Email_dt.value, password_dt.value);
         const user = userCredential.user;
         console.log(user);
+        alertify.success('Successfully login');
 
+        // Clear input fields after successful submission
+        productTitle.value = '';
+        productDescription.value = '';
+        productPrice.value = '';
+        userName.value = '';
+        userNumber.value = '';
+        upload_photo.value = '';
         from_dt.reset();
     } catch (error) {
         const errorCode = error.code;

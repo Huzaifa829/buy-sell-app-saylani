@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
 
   <title>home</title>
 </head>
@@ -42,11 +43,11 @@
     
     <!-- product Container start -->
 
-   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+   <div id="main_card_container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
     <!-- card container -->
 
-    <div class="card bg-base-100 shadow-xl">
+    <!-- <div class="card bg-base-100 shadow-xl">
       <figure>
         <img
           class="object-cover w-full h-48"
@@ -65,7 +66,7 @@
           <button class="btn btn-primary">Buy Now</button>
         </div>
       </div>
-    </div>
+    </div> -->
    
     
 
@@ -76,6 +77,8 @@
 
 </body>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+
 <script type="module" src="./script/index.js"></script>
 
 </html>

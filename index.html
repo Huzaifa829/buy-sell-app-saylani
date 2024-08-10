@@ -1,32 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
 
-    <title>home</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+
+  <title>home</title>
 </head>
+
 <body>
-    <div class="navbar bg-primary">
-        <div class="flex-1 px-2 lg:flex-none">
-          <a class="text-lg font-bold text-white">daisyUI</a>
+  <!-- navbar start -->
+  <div class="navbar bg-primary">
+    <div class="flex-1 px-2 lg:flex-none">
+      <a href="./index.html" class="text-lg font-bold text-white">Buy / Sells Corner</a>
+    </div>
+    <div class="flex flex-1 justify-end px-2">
+      <div id="nav_option_show" class="flex items-stretch">
+        <!-- btn came from js file -->
+      </div>
+    </div>
+  </div>
+  <!-- navbar end -->
+
+  <div class="bg-[#FFF6F6] m-10 p-5">
+
+    <!-- search Bar start -->
+    <label class="input input-bordered flex items-center gap-2">
+      <input type="text" class="grow" placeholder="Search" />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
+        <path fill-rule="evenodd"
+          d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+          clip-rule="evenodd" />
+      </svg>
+    </label>
+    <!-- search Bar end -->
+
+    <h1 class="text-4xl font-bold mt-5 mb-5">
+      Products
+    </h1>
+    
+    <!-- product Container start -->
+
+   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+    <!-- card container -->
+
+    <div class="card bg-base-100 shadow-xl">
+      <figure>
+        <img
+          class="object-cover w-full h-48"
+          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+          alt="Shoes" />
+      </figure>
+      <div class="card-body h-100 flex flex-col justify-between">
+        <div>
+          <h2 class="card-title">Shoes!</h2>
+          <p class="text-sm overflow-hidden text-ellipsis">
+            If a dog chews shoes whose shoes does he choose? If a dog chews shoes whose shoes does he choose? If a dog chews shoes whose shoes does he choose? If a dog chews shoes whose shoes does he choose? If a dog chews shoes whose shoes does he choose? If a dog chews shoes whose shoes does he choose? 
+          </p>
         </div>
-        <div class="flex flex-1 justify-end px-2">
-          <div class="flex items-stretch">
-            <a class="btn btn-ghost rounded-btn">Button</a>
-            <div class="dropdown dropdown-end">
-              <div tabindex="0" role="button" class="btn btn-ghost rounded-btn">Dropdown</div>
-              <ul
-                tabindex="0"
-                class="menu dropdown-content bg-base-100 rounded-box z-[1] mt-4 w-52 p-2 shadow">
-                <li><a>Item 1</a></li>
-                <li><a>Item 2</a></li>
-              </ul>
-            </div>
-          </div>
+        <div class="card-actions flex justify-between items-center">
+          <span class="text-lg font-semibold text-gray-700">$99.99</span>
+          <button class="btn btn-primary">Buy Now</button>
         </div>
       </div>
+    </div>
+   
+    
+
+
+  </div>
+    <!-- product Container end -->
+
+
 </body>
 <script src="https://cdn.tailwindcss.com"></script>
 <script type="module" src="./script/index.js"></script>

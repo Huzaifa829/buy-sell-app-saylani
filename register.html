@@ -7,7 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
     <title>Document</title>
 </head>
-
 <body>
     <!-- navbar start -->
     <div class="h-[10vh] navbar bg-primary text-primary-content">
@@ -48,8 +47,13 @@
                 <input id="profile_pic" type="file" class="file-input file-input-bordered file-input-primary w-full max-w-xs" />
             </div>
             <div class="text-center mt-5">
-                <button type="submit" class="btn btn-primary">Register</button>
+                <button id="register-btn" type="submit" class="btn btn-primary">
+                    <span id="register-text">Register</span>
+                    <span id="loading-spinner" class="loading loading-bars loading-lg hidden"></span>
+                    <!-- <span id="loading-spinner" class="loading loading-bars loading-lg "></span> -->
+                </button>
             </div>
+            
             <div class="text-center mt-5 text-blue-500">
                 <a href="./login.html">Not a user? please register first</a>
             </div>

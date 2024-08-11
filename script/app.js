@@ -4,10 +4,28 @@ import { collection, query, where, getDocs } from "https://www.gstatic.com/fireb
 
 const nav_option_show = document.querySelector('#nav_option_show')
 const main_card_container = document.querySelector('#main_card_container')
+const searchInput = document.querySelector('#searchInput')
 alertify.set('notifier', 'position', 'top-center');
 
 let logout_btn ;
+
+
+
+
 let arr = []
+
+
+searchInput.addEventListener('input', function(event) {
+  const searchTerm = event.target.value;
+  if (searchTerm == '') {
+    render(arr)
+  } else {
+    const results = searchProducts(searchTerm);
+    console.log(results);
+    render(results)
+    
+  }
+});
 async function getDataFrom_db(){
   const querySnapshot = await getDocs(collection(db, "addPost"));
   querySnapshot.forEach((doc) => {
@@ -15,12 +33,23 @@ async function getDataFrom_db(){
       arr.push(doc.data())
       
   });
-  render()
+  render(arr)
 }
 getDataFrom_db()
 
-async function render(){
-  arr.map((item,index)=>{
+async function render(dt){
+  main_card_container.innerHTML = ''
+if(dt.length === 0){
+  main_card_container.innerHTML = `
+  <div class="text-center">
+  <h1>No data Found</h1>
+  </div>
+  `
+  return;
+}
+
+
+  dt.map((item,index)=>{
 
     // console.log(item.text);
     main_card_container.innerHTML +=`
@@ -29,7 +58,7 @@ async function render(){
         <img
           class="object-cover w-full h-48"
           src="${item.productImgUrl}"
-          alt="${item.productTitle}" />
+          alt="" />
       </figure>
       <div class="card-body h-100 flex flex-col justify-between">
         <div>
@@ -40,7 +69,7 @@ async function render(){
         </div>
         <div class="card-actions flex justify-between items-center">
           <span class="text-lg font-semibold text-gray-700">RS ${item.productPrice}</span>
-          <button class="btn btn-primary">Buy Now</button>
+          <button class="btn btn-primary bg-[#F000B8]">Buy Now</button>
         </div>
       </div>
     </div>
@@ -74,7 +103,7 @@ function check_ononAuthStateChanged(){
                     class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                     <li>
                       <a href="addPost.html" class="justify-between">
-                        add post
+                        Add post
                       </a>
                     </li>
                     <li><a>Settings</a></li>
@@ -109,3 +138,23 @@ function check_ononAuthStateChanged(){
       });
 }
 check_ononAuthStateChanged()
+
+
+// searchProducts item
+
+function searchProducts(searchTerm) {
+  
+
+  const lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+  return arr
+    .filter(product => product.productTitle.toLowerCase().includes(lowerCaseSearchTerm))
+    .map(product => {
+      const title = product.productTitle;
+      const highlightedTitle = title.replace(
+        new RegExp(`(${searchTerm})`, 'gi'),
+        '<span class="highlighted">$1</span>'
+      );
+      return { ...product, productTitle: highlightedTitle };
+    });
+}

@@ -91,16 +91,19 @@ from_dt.addEventListener('submit', async (e) => {
         });
         console.log("Document written with ID: ", docRef.id);
         alertify.success('Successfully register');
-
+        setTimeout(function() {
+            window.location = 'login.html';
+        }, 1000);
        
         from_dt.reset();
       } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
+        alertify.error(errorMessage);
         resetButton()
       } finally{
         resetButton()
-        window.location = 'login.html'
+       
       }
     
     

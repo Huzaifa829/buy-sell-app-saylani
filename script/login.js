@@ -48,22 +48,19 @@ from_dt.addEventListener('submit', async (e) => {
         const user = userCredential.user;
         console.log(user);
         alertify.success('Successfully login');
-
-        // Clear input fields after successful submission
-        productTitle.value = '';
-        productDescription.value = '';
-        productPrice.value = '';
-        userName.value = '';
-        userNumber.value = '';
-        upload_photo.value = '';
+        setTimeout(function() {
+            window.location = 'index.html'
+        }, 1000);
         from_dt.reset();
+      
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
+        alertify.error(errorMessage);
         resetButton()
     } finally {
         resetButton()
-        window.location = 'index.html'
+   
     }
 
 

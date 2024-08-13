@@ -12,26 +12,29 @@
 
 <body>
       <!-- Navbar start -->
-  <div class="navbar bg-primary">
-    <div class="flex-1 px-2 lg:flex-none">
-      <a href="./index.html" class="text-lg font-bold text-white">Buy / Sells Corner</a>
-    </div>
-    <div class="flex flex-1 justify-end px-2">
-      <div id="nav_option_show" class="flex items-stretch">
-        <!-- btn came from js file -->
+      <div class="navbar bg-primary">
+        <div class="flex-1 px-2 lg:flex-none">
+          <a href="./index.html" class="text-lg font-bold text-white">Buy / Sells Corner</a>
+        </div>
+        <div class="flex flex-1 justify-end px-2">
+          <div id="nav_option_show" class="flex items-stretch">
+            <!-- btn came from js file -->
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
   <!-- Navbar end -->
-  <div class="bg-[#FFF6F6] m-0 p-0 md:m-10 md:p-5">
+  <div id="show_product_crd" class="bg-[#FFF6F6] m-0 p-0 md:m-10 md:p-5">
     <div class="card lg:card-side w-full md:w-4/5 mx-auto border border-gray-300 shadow-xl">
-        <figure class="w-full md:w-auto flex-shrink-0">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.webp"
-              alt="Album"
-              class="max-w-full h-auto object-contain"
-            />
-          </figure>
+      <figure class="w-full md:w-auto flex-shrink-0">
+        <div class="relative w-64 h-64 md:w-80 md:h-80">
+          <img
+            src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.webp"
+            alt="Album"
+            class="absolute inset-0 w-full h-full object-contain"
+          />
+        </div>
+      </figure>
+      
           
       <div class="card-body">
         <div class="flex justify-between items-center">
@@ -96,5 +99,6 @@
   
 </body>
 <script src="https://cdn.tailwindcss.com"></script>
+<script type="module" src="./script/singlePage.js"></script>
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
 </html>

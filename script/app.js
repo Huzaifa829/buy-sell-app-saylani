@@ -29,7 +29,7 @@ searchInput.addEventListener('input', function(event) {
 async function getDataFrom_db(){
   const querySnapshot = await getDocs(collection(db, "addPost"));
   querySnapshot.forEach((doc) => {
-      console.log(doc.data());
+      // console.log(doc.data());
       arr.push(doc.data())
       
   });
@@ -37,45 +37,90 @@ async function getDataFrom_db(){
 }
 getDataFrom_db()
 
-async function render(dt){
-  main_card_container.innerHTML = ''
-if(dt.length === 0){
-  main_card_container.innerHTML = `
-  <div class="text-center">
-  <h1>No data Found</h1>
-  </div>
-  `
-  return;
-}
+async function render(dt) {
+  main_card_container.innerHTML = '';
 
+  if (dt.length === 0) {
+    main_card_container.innerHTML = `
+      <div class="text-center">
+        <h1>No data Found</h1>
+      </div>
+    `;
+    return;
+  }
 
-  dt.map((item,index)=>{
-
-    // console.log(item.text);
-    main_card_container.innerHTML +=`
-   <div class="card bg-base-100 shadow-xl">
-      <figure>
-        <img
-          class="object-cover w-full h-48 object-top rounded-[10px]"
-          src="${item.productImgUrl}"
-          alt="" />
-      </figure>
-      <div class="card-body h-100 flex flex-col justify-between">
-        <div>
-          <h2 class="card-title">${item.productTitle}</h2>
-          <p class="text-sm overflow-hidden text-ellipsis">
-         ${item.productDescription}
-          </p>
-        </div>
-        <div class="card-actions flex justify-between items-center">
-          <span class="text-lg font-semibold text-gray-700">RS ${item.productPrice}</span>
-          <button class="btn btn-primary bg-[#F000B8]">Buy Now</button>
+  // First, render all the cards
+  dt.forEach((item, index) => {
+    main_card_container.innerHTML += `
+      <div class="card bg-base-100 shadow-xl">
+        <figure>
+          <img
+            class="object-cover w-full h-48 object-top rounded-[10px]"
+            src="${item.productImgUrl}"
+            alt="" />
+        </figure>
+        <div class="card-body h-100 flex flex-col justify-between">
+          <div>
+            <h2 class="card-title">${item.productTitle}</h2>
+            <p class="text-sm overflow-hidden text-ellipsis">
+              ${item.productDescription}
+            </p>
+          </div>
+          <div class="card-actions flex justify-between items-center">
+            <span class="text-lg font-semibold text-gray-700">RS ${item.productPrice}</span>
+            <button class="btn btn-primary bg-[#F000B8]" id="buy-now-${index}">Buy Now</button>
+          </div>
         </div>
       </div>
-    </div>
-    `
-})
+    `;
+  });
+
+  // Now, add event listeners to all "Buy Now" buttons
+  dt.forEach((item, index) => {
+    document.getElementById(`buy-now-${index}`).addEventListener('click', async() => {
+      // Save the selected item data to localStorage
+      onAuthStateChanged(auth,async  (user) => {
+        if (user) {
+          try {
+            const q = query(collection(db, "users"), where("uid", "==", item.uid));
+      
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+      
+              const useritem = doc.data()
+          
+              localStorage.setItem('selectedProduct', JSON.stringify({
+                ...item,
+                ...useritem
+              }));
+          window.location.href = 'singlePage.html';
+        
+              // console.log(useritem);
+              
+    
+            });
+          
+        } catch (error) {
+          
+        }
+          
+          // ...
+        } else {
+          // User is signed out
+          // ...
+          alertify.error('Login Frist');
+        }
+      });
+
+    
+      
+
+      // Redirect to singlePage.html
+      // window.location.href = 'singlePage.html';
+    });
+  });
 }
+
 function check_ononAuthStateChanged(){
 
     onAuthStateChanged(auth,async  (user) => {

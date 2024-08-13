@@ -56,7 +56,7 @@ if(dt.length === 0){
    <div class="card bg-base-100 shadow-xl">
       <figure>
         <img
-          class="object-cover w-full h-48"
+          class="object-cover w-full h-48 object-top rounded-[10px]"
           src="${item.productImgUrl}"
           alt="" />
       </figure>
